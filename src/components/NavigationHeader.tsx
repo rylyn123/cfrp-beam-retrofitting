@@ -1,5 +1,5 @@
 import React from 'react';
-import { Printer, RefreshCw, Sparkles, BookOpen, Layers, Compass } from 'lucide-react';
+import { Printer, RefreshCw, Sparkles, BookOpen, Layers, Compass, Cloud } from 'lucide-react';
 
 interface NavigationHeaderProps {
   activeSheet: 'flexure' | 'vba' | 'shear' | 'materials' | 'optimizer';
@@ -7,6 +7,7 @@ interface NavigationHeaderProps {
   onPrint: () => void;
   onReset: () => void;
   onRunSolver: () => void;
+  onOpenCloudModal?: () => void;
   isSolving?: boolean;
 }
 
@@ -16,6 +17,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   onPrint,
   onReset,
   onRunSolver,
+  onOpenCloudModal,
   isSolving,
 }) => {
   return (
@@ -99,7 +101,18 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
       </nav>
 
       {/* Zone 3: Primary Actions */}
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2">
+        {onOpenCloudModal && (
+          <button
+            onClick={onOpenCloudModal}
+            className="px-3 py-1.5 text-xs font-mono font-medium rounded bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 transition-colors flex items-center gap-1.5 whitespace-nowrap shadow-sm border border-cyan-700/60"
+            title="Open Firebase Cloud Projects & Sync"
+          >
+            <Cloud className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Cloud Projects</span>
+          </button>
+        )}
+
         <button
           onClick={onRunSolver}
           disabled={isSolving}

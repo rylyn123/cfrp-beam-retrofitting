@@ -20,6 +20,8 @@ import { ShearSheet } from './components/ShearSheet';
 import { MaterialsSheet } from './components/MaterialsSheet';
 import { PrintableReport } from './components/PrintableReport';
 import { OptimizationTool } from './components/OptimizationTool';
+import { CloudProjectsModal } from './components/CloudProjectsModal';
+import { CloudProject } from './firebase';
 import {
   Layers,
   Sparkles,
@@ -30,6 +32,7 @@ import {
   FileSpreadsheet,
   RefreshCw,
   Compass,
+  Cloud,
 } from 'lucide-react';
 
 export default function App() {
@@ -37,6 +40,8 @@ export default function App() {
   const [shearInputs, setShearInputs] = useState<ShearInputs>(DEFAULT_SHEAR_INPUTS);
   const [activeSheet, setActiveSheet] = useState<'flexure' | 'vba' | 'shear' | 'materials' | 'optimizer'>('flexure');
   const [showPrintModal, setShowPrintModal] = useState<boolean>(false);
+  const [showCloudModal, setShowCloudModal] = useState<boolean>(false);
+  const [cloudNotice, setCloudNotice] = useState<string | null>(null);
   const [isSolving, setIsSolving] = useState<boolean>(false);
   const [solverStep, setSolverStep] = useState<number>(1);
   const [hasRunIteration, setHasRunIteration] = useState<boolean>(false);

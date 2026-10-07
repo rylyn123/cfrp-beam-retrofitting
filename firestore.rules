@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        (request.auth.token.email == 'RylynSedomar@gmail.com' ||
+         request.auth.token.email == 'rylynsedomar@gmail.com');
+    }
+
+    // Test connection document for initial health-check
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // User Profile Documents
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // Projects: Beam strengthening calculations
+    match /projects/{projectId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin()) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+
+    // Custom Materials Library
+    match /custom_materials/{materialId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin()) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+    }
+  }
+}

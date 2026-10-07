@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "CFRP Beam Strengthening calculation project containing flexure and shear inputs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique project document ID" },
+        "title": { "type": "string", "description": "Project title" },
+        "beamId": { "type": "string", "description": "Identifier for beam member" },
+        "structureName": { "type": "string", "description": "Structure name" },
+        "engineerName": { "type": "string", "description": "Engineer name" },
+        "userId": { "type": "string", "description": "Auth UID of the project owner" },
+        "flexureInputs": { "type": "object", "description": "Flexure design parameters" },
+        "shearInputs": { "type": "object", "description": "Shear retrofit parameters" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["title", "userId", "flexureInputs", "shearInputs", "createdAt", "updatedAt"]
+    },
+    "CustomMaterial": {
+      "title": "CustomMaterial",
+      "description": "Custom CFRP material specification in user TDS library",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique material ID" },
+        "brand": { "type": "string", "description": "CFRP brand name" },
+        "name": { "type": "string", "description": "CFRP system description" },
+        "fu": { "type": "number", "description": "Ultimate tensile strength in MPa" },
+        "eu": { "type": "number", "description": "Ultimate rupture strain" },
+        "Ef": { "type": "number", "description": "Modulus of elasticity in MPa" },
+        "tf": { "type": "number", "description": "Thickness per ply in mm" },
+        "userId": { "type": "string", "description": "Auth UID of the owner" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" }
+      },
+      "required": ["brand", "fu", "eu", "Ef", "tf", "userId", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile and engineering organization metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Auth user UID" },
+        "email": { "type": "string", "description": "User email" },
+        "displayName": { "type": "string", "description": "Display name or company" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of creation" }
+      },
+      "required": ["email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "User saved beam strengthening design projects"
+    },
+    "/custom_materials/{materialId}": {
+      "schema": "CustomMaterial",
+      "description": "User saved custom CFRP material systems"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile information"
+    }
+  }
+}
