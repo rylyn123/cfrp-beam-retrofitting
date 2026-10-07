@@ -1,0 +1,6 @@
+{
+  "name": "CFRP Beam Strengthening Design (ACI 440)",
+  "description": "Interactive CFRP structural design and verification calculation based on ACI 440 with automated iterative neutral axis equilibrium solver and printable calculation sheets.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
